@@ -5,8 +5,8 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"gh-build": "gh-pages -d build",
-		"deploy": "npm build && npm gh-build",
+		"gh-build": "gh-pages -d build -t true",
+		"deploy": "npm run build && npm run gh-build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
