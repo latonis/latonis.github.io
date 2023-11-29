@@ -1,4 +1,4 @@
-export type Categories = 'hello world' | 'yara'
+export type Categories = 'hello world' | 'yara' | 'YARA' | 'YARA-x' | 'software engineering'
 
 export type Post = {
     title: string

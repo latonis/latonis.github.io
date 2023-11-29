@@ -10,7 +10,7 @@
 </script>
 
 <nav>
-	<a href={base} class="title">
+	<a href="{base}/" class="title">
 		<b>{config.title}</b>
 	</a>
 
