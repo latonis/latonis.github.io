@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="./favicon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="alternate" type="application/atom+xml" href="./rss.xml" />
+
+	
+		<link href="./_app/immutable/assets/0.8838b208.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/3.5c59e260.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.cb450d0f.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.6860d270.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.816a8d48.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.f67274eb.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/paths.7217e415.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/control.f5b05b5f.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.3bbb0f4f.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/preload-helper.a4192956.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.8b3f023b.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.e85b8f35.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/config.5c2cddfb.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/each.e59479a4.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/spread.8a54911c.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/3.13fcd8ea.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/utils.2fdf1f5e.js"><title>YARA and Me: Contributing to YARA's Upcoming Release</title><!-- HEAD_svelte-ylbs26_START --><meta property="og:type" content="article"><meta property="og:title" content="YARA and Me: Contributing to YARA's Upcoming Release"><!-- HEAD_svelte-ylbs26_END -->
+
+	<script type="module">
+		const theme = localStorage.getItem('color-scheme')
+
+		theme
+			? document.documentElement.setAttribute('color-scheme', theme)
+			: localStorage.setItem('color-scheme', 'dark')
+	</script>
+</head>
+
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">  <div class="layout svelte-mrm2i5"><nav class="svelte-scea26"><a href="/latonis.github.io/" class="title svelte-scea26"><b>Land of Jacob's Musings</b></a> <ul class="links svelte-scea26"><li><a href="/latonis.github.io/about" class="svelte-scea26">About</a> </li><li><a href="/latonis.github.io/rss.xml" target="_blank" class="svelte-scea26">RSS Feed</a> </li></ul> <button aria-label="Toggle theme" class="svelte-114mtci"><div class="svelte-114mtci"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-moon "><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg> <span data-svelte-h="svelte-397x2m">Dark</span></div> </button> </nav> <main class="svelte-mrm2i5">  <article class="svelte-8uncrq"> <hgroup><h1 class="svelte-8uncrq">YARA and Me: Contributing to YARA's Upcoming Release</h1> <p class="svelte-8uncrq">Published at Nov 30, 2023</p></hgroup>  <div class="tags svelte-8uncrq"><span class="surface-4 svelte-8uncrq">#YARA</span><span class="surface-4 svelte-8uncrq">#YARA-X</span><span class="surface-4 svelte-8uncrq">#software engineering</span></div>  <div class="prose"><h1 data-svelte-h="svelte-636d2i">YARA and Me</h1> <p data-svelte-h="svelte-1aplicc">I’ve spent a fair amount of time lately developing bits and pieces of the <strong>Mach-O</strong> module for YARA-X, which is the next iteration of the YARA ecosystem that is likely nearing its first release in the near future. I began by starting to write features for YARA (the one written in C), but was advised by Victor Alvarez (the original author and continued maintainer of the YARA ecosystem) to focus on YARA-X, as YARA is nearing a change freeze of new features to focus on developing YARA-X and ensuring mirrored capabilities between YARA and YARA-X.</p> <h2 data-svelte-h="svelte-zxk5kc">Additional Context</h2> <p data-svelte-h="svelte-oxgj1w">If you’re unfamiliar with YARA but still have managed to find your way to this blog post of me ranting and musing, you can find out more about this wonderful pattern matching utility here: <a href="https://virustotal.github.io/yara/" rel="nofollow">https://virustotal.github.io/yara/</a>.</p> <p data-svelte-h="svelte-1xoa5rk">In short, the tool is described as such:</p> <blockquote data-svelte-h="svelte-1yftvm5"><p>YARA is a tool aimed at (but not limited to) helping malware researchers to identify and classify malware samples. With YARA you can create descriptions of malware families (or whatever you want to describe) based on textual or binary patterns.</p></blockquote> <h2 data-svelte-h="svelte-hh83ci">Where the <strong>Mach-O</strong> module is going</h2> <p data-svelte-h="svelte-bdxbma">There’s quite a few routes where development can continue, and I’m going to go over a few of them in this blog. A bit of conext is needed before we dive into what I’d like to work on.</p> <p data-svelte-h="svelte-2entzn">First, I’m going to talk about the elephant in the room when it comes to YARA, YARA-X, and Mach-O. YARA (the one written in C) and Mach-O parsing did not have the healthiest of relationships. There were missing docs, security vulnerabilities due to improper parsing, and a bit more. If you’d like context on any of this, you can find more info and form your own opinions from these PRs and Issues:</p> <ul data-svelte-h="svelte-g5mm2z"><li><a href="https://github.com/VirusTotal/yara/pull/1100" rel="nofollow">#1100</a></li> <li><a href="https://github.com/VirusTotal/yara/issues/1178" rel="nofollow">#1178</a></li> <li><a href="https://github.com/VirusTotal/yara/issues/1498" rel="nofollow">#1498</a></li></ul> <p data-svelte-h="svelte-1r0tyib">Now that we’ve got the context out of the way, we can get into the fun stuff.
+In YARA (again, the C one), the Mach-O module was not enabled and compiled with the main executable. You had to configure the Makefile to compile it with the needed capabilities and without any documentation readily accessible for it. The future for Mach-O and MacOS Security prospects in YARA were not looking so hot.</p> <p data-svelte-h="svelte-1ory96k">This all changed with YARA-X (the one written in Rust). The memory and borrow checker system in Rust allowed for a safer port (is it a port if it is improved?) of the Mach-O module from C into Rust. With the added checking and memory safety, there comes a lot of increased confidence for the module. In fact, the Mach-O module is now included by default into YARA-X when compiled.</p> <p><img src="images/yara-and-me/image.png" alt="screenshot of GitHub showing the default build features of YARA-X, which included Mach-O module" loading="lazy"></p> <p data-svelte-h="svelte-xu9y0w">This is fantastic news: no messing about with a custom Makefile and no recompiling. Assuming the defaults include Mach-O come release time, users will be able to use Mach-O module straight out of the box instead of it being tucked away in the corner and hidden.</p> <p data-svelte-h="svelte-1mwv36p">A lot of us (maybe this is too general of an assumption?) have no problem making a change in a config and recompiling for our specific use-cases. However, this prohibits a lot of people (and likely teams/orgs) from willingly using this in their environment.</p> <p data-svelte-h="svelte-9clksl">The Mach-O module may still have a long way to go, but the progress from YARA-X alone is incredibly encouraging, and in my opinion, a massive step in the right direction. When it comes to the initial release for YARA-X, supporting Mach-O files and the landscape behind them is <strong>huge</strong>.</p> <p data-svelte-h="svelte-1ucbe5u">MacOS and iOS security folks probably feel pretty closely to how I feel right now:</p> <p><img src="images/yara-and-me/celebration.gif" alt="The Office celebration gif" loading="lazy"></p> <p data-svelte-h="svelte-1ph5tfx">Now that we have all of that out of the way, let’s dive into what is coming in the near future or currently in progress.</p> <h3 data-svelte-h="svelte-64zwac">Load Commands</h3> <p data-svelte-h="svelte-19aapop">For the first steps forward, most (if not all) of the load commands should be parsed and available to the user for the ability to query and write rules on. A few come to mind for detection purposes, and those are the values that can be forged or modified (compile timestamps, UUIDs, etc.). Values like this can be used with other indicators to provide higher fidelity detections (ie, a certain threat actor may always compile their Mac malware with dylibs that have a compile timestamp of 2)</p> <p data-svelte-h="svelte-1jj0gap">I plan on iterating through most development wise, with the <code>LC_UUID</code> and <code>LC_MIN_VERSION*</code> load commands being the ones I am currently working on (either in development or in review to be merged). I would prefer to work on the ones that can help derive the most value from a detection perspective first (so if you have any use-cases, reach out and let me know!).</p> <h3 data-svelte-h="svelte-wzbg1e">Code Signing</h3> <p data-svelte-h="svelte-q9ex8s">The <code>CODE_SIGNATURE</code> segment in a Mach-O executable can really contain quite a lot. Apple requires signing of <em>all</em> executables to run seamlessly (otherwise the user will need to go into System Preferences and click that little annoying <code>allow</code> button).</p> <p data-svelte-h="svelte-6ss75w">There are two blobs in the code signing segment I would really like to parse out to make available to users: <strong>certificate chains</strong> and <strong>entitlements</strong>.</p> <h4 data-svelte-h="svelte-gp47y9">Certificate Chains</h4> <p data-svelte-h="svelte-spqfd2">With all this code signing business that Apple is rolling out (since Big Sur), a lot of malware authors are going to be signing binaries via adhoc certificates or stolen/compromised certificates. This allows another opporunity to cluster or detect on specific certificate chains or values in the chains. There’s a lot of data that can be bined here for correlation or detection. After load commands, I’d like to get these moving into a parsed and detectable state.</p> <p data-svelte-h="svelte-11bkrm0">You can read more on Mach-O certificate chains and CMS blobs <a href="https://opensource.apple.com/source/dyld/dyld-433.5/interlinked-dylibs/CodeSigningTypes.h.auto.html" rel="nofollow">here</a> and <a href="https://redmaple.tech/blogs/macho-files/#apple-code-signing" rel="nofollow">more here</a>.</p> <h4 data-svelte-h="svelte-1xkg7bi">Entitlements</h4> <p data-svelte-h="svelte-13nh1h7">Entitlements are a way for applications to ask for permission to use a service or piece of technology on the device it is running on. Entitlements are stored as key-value pairs in the code signature.</p> <p data-svelte-h="svelte-1so7x1d">I would like to focus on these eventually to help discover and cluster on Mach-o executables that request similar (or the same) entitlements on the system. These entitlements allow developers to be granted specific permissions and can help indicate towards possible behaviors of an application before it is executed.</p> <p data-svelte-h="svelte-pt7en5">You can read more on Mach-O entitlements <a href="https://developer.apple.com/documentation/bundleresources/entitlements" rel="nofollow">here</a>.</p> <h2 data-svelte-h="svelte-1v4u789">Lots of Work Ahead</h2> <p data-svelte-h="svelte-4ulz5k">Now that I’ve laid some of this out, I am going to save you the time of reading anymore of my diatribe and go write some Rust 🦀.</p> <h2 data-svelte-h="svelte-33yqsm">A Bit of Fun</h2> <p data-svelte-h="svelte-1qf02t2"><a href="https://adventofcode.com/2023" rel="nofollow">Advent of Code 2023 🎄</a> releases tonight (01 December 2023) at 12am ET. I highly encourage you to try it out if you haven’t in the past. Learn a new language; practice your coding problem skills; have fun. It’s a blast every year, and I can’t recommend it enough. I highly recommend checking out others’ solutions to problems as well; I can’t even begin to describe all I’ve learned from doing so.</p></div> </article></main> <footer class="svelte-k2ae0s"><p class="svelte-k2ae0s">Land of Jacob's Musings © 2023</p> </footer> </div> 
+			
+			<script>
+				{
+					__sveltekit_1z0y4xq = {
+						assets: "/latonis.github.io",
+						base: new URL(".", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.cb450d0f.js"),
+						import("./_app/immutable/entry/app.3bbb0f4f.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 3],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+</body>
+
+</html>

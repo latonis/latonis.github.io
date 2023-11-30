@@ -6,6 +6,14 @@
 				<atom:link href="https://latonis.github.io/rss.xml" rel="self" type="application/rss+xml"/>
 				
 						<item>
+							<title>YARA and Me: Contributing to YARA's Upcoming Release</title>
+							<description>You may know YARA, which is written in C, but do you know YARA-X? YARA-X is written in Rust and is the new evolution (perhaps a revolution while we're at it) for the pattern matching utility.</description>
+							<link>https://latonis.github.io/yara-and-me</link>
+							<guid isPermaLink="true">https://latonis.github.io/yara-and-me</guid>
+							<pubDate>Thu, 30 Nov 2023 00:00:00 GMT</pubDate>
+						</item>
+					
+						<item>
 							<title>hello, world</title>
 							<description>hello, world</description>
 							<link>https://latonis.github.io/hello-world</link>
