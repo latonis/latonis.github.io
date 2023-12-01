@@ -1,7 +1,7 @@
 ---
 title: "YARA and Me: Contributing to YARA's Upcoming Release"
 description: "You may know YARA, which is written in C, but do you know YARA-X? YARA-X is written in Rust and is the new evolution (perhaps a revolution while we're at it) for the pattern matching utility."
-date: '2023-11-28'
+date: '2023-11-30'
 categories:
     - YARA
     - YARA-X
@@ -15,7 +15,7 @@ published: true
 </script>
 
 # YARA and Me
-I've spent a fair amount of time lately developing bits and pieces of the **Mach-O** module for YARA-X, which is the next iteration of the YARA ecosystem that is likely nearing its first release in the near future. I began by starting to write features for YARA (the one written in C), but was advised by Victor Alvarez (the original author and continued maintainer of the YARA ecosystem) to focus on YARA-X, as YARA is nearing a change freeze of new features to focus on developing YARA-X and ensuring mirrored capabilities between YARA and YARA-X. 
+I've spent a fair amount of time lately developing bits and pieces of the **Mach-O** module for YARA-X, which is the next iteration of the YARA ecosystem that is likely nearing its first release in the near future. I began by starting to write features for YARA (the one written in C), but was advised by Victor Alvarez (the original author and continued maintainer of the YARA ecosystem) to focus on YARA-X, as YARA is nearing a change freeze of new features to focus on developing YARA-X and ensuring mirrored capabilities between YARA and YARA-X. I'm not sure when YARA-X will have a full-fledged release, but I want to have as much Mach-O capability as possible when it comes.
 
 
 ## Additional Context
@@ -26,7 +26,7 @@ In short, the tool is described as such:
 > YARA is a tool aimed at (but not limited to) helping malware researchers to identify and classify malware samples. With YARA you can create descriptions of malware families (or whatever you want to describe) based on textual or binary patterns.
 
 ## Where the **Mach-O** module is going
-There's quite a few routes where development can continue, and I'm going to go over a few of them in this blog. A bit of conext is needed before we dive into what I'd like to work on.
+There's quite a few routes where development can continue, and I'm going to go over a few of them in this blog. A bit of context is needed before we dive into what I'd like to work on.
 
 First, I'm going to talk about the elephant in the room when it comes to YARA, YARA-X, and Mach-O. YARA (the one written in C) and Mach-O parsing did not have the healthiest of relationships. There were missing docs, security vulnerabilities due to improper parsing, and a bit more. If you'd like context on any of this, you can find more info and form your own opinions from these PRs and Issues:
 - [#1100](https://github.com/VirusTotal/yara/pull/1100)
